@@ -27,7 +27,7 @@ try:
 
 
     class DropTable:
-        def __init__(self, *table_name):
+        def __init__(self, table_name):
             self.table_name = table_name
 
         def delete_table(self):
@@ -37,26 +37,26 @@ try:
 
 
     class InsertData:
-        def __init__(self, table_name, data):
+        def __init__(self, table_name, *words):
             self.table_name = table_name
-            self.data = data
+            self.words = words
 
         def insert_data(self):
             with connection.cursor() as cursor:
-                cursor.execute(f'INSERT INTO {self.table_name} VALUES({self.data});')
+                cursor.execute(f'INSERT INTO {self.table_name} VALUES({self.words});')
                 # INSERT INTO user VALUES(1,'Kirill');
 
 
     class Select:
-        def __init__(self, select):
-            self.select = select
+        def __init__(self, sel):
+            self.select = sel
 
         def selectData(self):
             with connection.cursor() as cursor:
                 cursor.execute(f'SELECT {self.select}')
 
 
-    n = int(input('Введите действие которое хотите выбрать\n '
+    n = int(input('Введите действие которое хотите выбрать\n'
                   '1)Создание таблицы\n'
                   '2)Удаление таблицы\n'
                   '3)Вставка\n'
@@ -65,22 +65,26 @@ try:
 
     while True:
         if n == 1:
-            table = input()
+            table = input('Создайте таблицу с помощью SQL кода')
             pt = CreateTable(table)
             pt.create_table()
+            break
         elif n == 2:
-            drop = input()
+            drop = input('Введите название таблицы для удаления или укажите таблицы через запятую')
             pt = DropTable(drop)
             pt.delete_table()
+            break
         elif n == 3:
-            name_table = input()
-            data = input()
+            name_table = input('Введите название таблицы')
+            data = input('Введите данные для присвоения столбцам таблицы')
             pt = InsertData(name_table, data)
             pt.insert_data()
+            break
         elif n == 4:
-            select = input()
+            select = input('Введите запрос без SELECT')
             pt = Select(select)
             pt.selectData()
+            break
         else:
             print('Выход')
             break
