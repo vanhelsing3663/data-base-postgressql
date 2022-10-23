@@ -53,10 +53,37 @@ try:
 
         def selectData(self):
             with connection.cursor() as cursor:
-                cursor.execute(f' ')
+                cursor.execute(f'SELECT {self.select}')
 
-    pt = DropTable(input())
-    pt.delete_table()
+
+    n = int(input('Введите действие которое хотите выбрать\n '
+                  '1)Создание таблицы\n'
+                  '2)Удаление таблицы\n'
+                  '3)Вставка\n'
+                  '4)Запрос\n'
+                  '5)Чтобы выйти из таблицы наберите на клавиатуре число больше 4'))
+
+    while True:
+        if n == 1:
+            table = input()
+            pt = CreateTable(table)
+            pt.create_table()
+        elif n == 2:
+            drop = input()
+            pt = DropTable(drop)
+            pt.delete_table()
+        elif n == 3:
+            name_table = input()
+            data = input()
+            pt = InsertData(name_table, data)
+            pt.insert_data()
+        elif n == 4:
+            select = input()
+            pt = Select(select)
+            pt.selectData()
+        else:
+            print('Выход')
+            break
 
 
 except Exception as error:
